@@ -1,38 +1,4 @@
 <resources>
     <string name="app_name">JuegosFavoritos-practica5</string>
-    <string name="welcome_txt">Bienvenido</string>
-    <string name="list_bottombar">List</string>
-    <string name="profile_bottombar">Profile</string>
-    <string name="games_bottombar">Games</string>
-    <string name="no_favourites_games">No hay juegos favoritos</string>
-    <string name="games">Juegos</string>
-    <string name="filter">Filtrar</string>
-    <string name="add_game">Añadir</string>
-    <string name="title_games">Juegos</string>
-    <string name="content_desc_sort_id">Ordenar ID</string>
-    <string name="content_desc_sort_alpha">Ordenar AZ</string>
-    <string name="content_desc_filter">Filtrar</string>
-    <string name="snackbar_game_deleted">Juego eliminado</string>
-    <string name="snackbar_undo">Deshacer</string>
-    <string name="platform_playstation">PlayStation</string>
-    <string name="platform_xbox">Xbox</string>
-    <string name="platform_nintendo">Nintendo</string>
-    <string name="platform_pc">PC</string>
-    <string name="delete_game_title">Borrar de favoritos</string>
-    <string name="delete_game_confirm">¿Deseas eliminar</string>
-    <string name="delete">Eliminar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="games_route">games_route</string>
-    <string name="profile_route">profile_route</string>
-    <string name="by_id">Por ID</string>
-    <string name="alphabetical">Alfabético</string>
-    <string name="default_order">Por defecto</string>
-    <string name="filter_dialog_title">Filtrar por plataforma</string>
-    <string name="platform_all">Todas</string>
-    <string name="filter_dialog_cancel">Cancelar</string>
-    <string name="preferences_title">Preferencias</string>
-    <string name="preference_filter_platform">Filtro plataforma</string>
-    <string name="preference_sort_order">Orden juegos</string>
-    <string name="add_floating_btn">Add</string>
-
+    <string name="welcome_txt">Welcome</string>
 </resources>
