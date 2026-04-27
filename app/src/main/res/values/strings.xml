@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JuegosFavoritos-practica5</string>
+    <string name="welcome_txt">Welcome</string>
 </resources>
