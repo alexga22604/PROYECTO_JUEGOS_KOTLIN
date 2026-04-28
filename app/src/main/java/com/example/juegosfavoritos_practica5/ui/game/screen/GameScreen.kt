@@ -1,0 +1,90 @@
+package com.example.juegosfavoritos_practica5.ui.game.screen
+
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.juegosfavoritos_practica5.R
+import com.example.juegosfavoritos_practica5.domain.model.GameBo
+import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
+import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun GameScreen(viewModel: GameViewModel) {
+    val state by viewModel.uiState.collectAsState()
+    var showFilterDialog by remember { mutableStateOf(false) }
+    var gameToDelete by remember { mutableStateOf<GameBo?>(null) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        contentAlignment = Alignment.Center
+    ) {
+        if (state.filteredAndSortedGames.isEmpty()) {
+            Text(
+                text = stringResource(R.string.no_favourites_games),
+                style = MaterialTheme.typography.headlineLarge,
+                color = Color.Gray
+            )
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(state.filteredAndSortedGames) { game ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .combinedClickable(
+                                onClick = { },
+                                onLongClick = { gameToDelete = game }
+                            )
+                    ) {
+                        Text(
+                            text = game.name,
+                            modifier = Modifier.padding(16.dp),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            thickness = 0.5.dp,
+                            color = Color.LightGray
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (showFilterDialog) {
+        FilterDialog(
+            onDismiss = { showFilterDialog = false },
+            onPlatformSelected = { viewModel.setFilter(it) },
+            platforms = listOf(
+                stringResource(R.string.platform_playstation),
+                stringResource(R.string.platform_xbox),
+                stringResource(R.string.platform_nintendo),
+                stringResource(R.string.platform_pc)
+            )
+        )
+    }
+}
