@@ -10,12 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +28,6 @@ import com.example.juegosfavoritos_practica5.R
 import com.example.juegosfavoritos_practica5.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
-import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,14 +39,14 @@ fun GameScreen(viewModel: GameViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.White),
+        contentAlignment = Alignment.Center
     ) {
         if (state.filteredAndSortedGames.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_favourites_games),
                 style = MaterialTheme.typography.headlineLarge,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.Center)
+                color = Color.Gray
             )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -78,18 +72,6 @@ fun GameScreen(viewModel: GameViewModel) {
                     }
                 }
             }
-        }
-
-        FloatingActionButton(
-            onClick = { },
-            modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.BottomEnd),
-            containerColor = BottomBarBackground,
-            contentColor = Color.White,
-            shape = CircleShape
-        ) {
-            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_floating_btn))
         }
     }
 

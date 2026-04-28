@@ -10,10 +10,8 @@ import kotlinx.coroutines.launch
 
 private const val DELAY_MILIS = 1000L
 
-
-class WelcomeViewModel: ViewModel() {
+class WelcomeViewModel : ViewModel() {
     private val _navigateToGames = MutableSharedFlow<Unit>(replay = 0)
-
     val navigateToGames: SharedFlow<Unit> = _navigateToGames.asSharedFlow()
 
     init {
@@ -22,6 +20,4 @@ class WelcomeViewModel: ViewModel() {
             _navigateToGames.emit(Unit)
         }
     }
-
-
 }

@@ -4,11 +4,13 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class ScreenNav : NavKey{
+sealed class ScreenNav : NavKey {
+    @Serializable
+    object Welcome : ScreenNav()
 
     @Serializable
-    object Welcome: ScreenNav()
+    object Games : ScreenNav()
 
-
-
+    @Serializable
+    object Profile : ScreenNav()
 }
