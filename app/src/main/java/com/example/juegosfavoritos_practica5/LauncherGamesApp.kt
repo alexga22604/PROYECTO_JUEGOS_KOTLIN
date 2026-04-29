@@ -17,6 +17,7 @@ import com.example.juegosfavoritos_practica5.ui.navigation.AppNavigation
 import com.example.juegosfavoritos_practica5.ui.navigation.ScreenNav
 
 private const val DEFAULT = ""
+
 @Composable
 fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState()
