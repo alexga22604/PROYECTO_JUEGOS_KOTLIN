@@ -33,5 +33,6 @@
     <string name="preferences_title">Preferencias</string>
     <string name="preference_filter_platform">Filtro plataforma</string>
     <string name="preference_sort_order">Orden juegos</string>
+    <string name="add_floating_btn">Add</string>
 
 </resources>
