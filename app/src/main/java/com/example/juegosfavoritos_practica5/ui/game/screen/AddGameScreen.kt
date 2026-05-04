@@ -25,8 +25,20 @@ import com.example.juegosfavoritos_practica5.ui.game.component.PlatformIconItem
 import com.example.juegosfavoritos_practica5.ui.game.model.PlatformItem
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
 import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
+import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
+import com.example.juegosfavoritos_practica5.ui.theme.SaveButtonColor
 
 private const val EMPTY_STRING = ""
+private const val PLATFORM_PLAYSTATION = "PlayStation"
+private const val PLATFORM_XBOX = "Xbox"
+private const val PLATFORM_NINTENDO = "Nintendo"
+
+private const val URL_PLAYSTATION = "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/video-games/playstation-isc3f6x60ta8lfk0hb24t.png/playstation-4ng359rzs0ryrajkol4q5.png?_a=DATAiZAAZAA0"
+private const val URL_XBOX = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Rt_VfAs451lrAtGQHRC6tcMW5PoPB2h5uA&s"
+private const val URL_NINTENDO = "https://i.pinimg.com/236x/63/69/2d/63692dec066bac00bb10806880533901.jpg"
+private const val URL_DEFAULT_PEGI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0VFJ5SrtF_e0oMczXOTo6P7mZx2sT2CC9w&s"
+
+private const val DEFAULT_PEGI_AGE = 3
 
 @Composable
 fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
@@ -36,30 +48,16 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     var coverUrl by remember { mutableStateOf(EMPTY_STRING) }
     var selectedPlatforms by remember { mutableStateOf(setOf<String>()) }
 
-    var selectedPegi by remember { mutableStateOf(3) }
-    var selectedPegiUrl by remember {
-        mutableStateOf("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0VFJ5SrtF_e0oMczXOTo6P7mZx2sT2CC9w&s")
-    }
+    var selectedPegi by remember { mutableStateOf(DEFAULT_PEGI_AGE) }
+    var selectedPegiUrl by remember { mutableStateOf(URL_DEFAULT_PEGI) }
 
     var showPegiDialog by remember { mutableStateOf(false) }
 
     val platformItems = remember {
         listOf(
-            PlatformItem(
-                R.string.platform_playstation,
-                "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/video-games/playstation-isc3f6x60ta8lfk0hb24t.png/playstation-4ng359rzs0ryrajkol4q5.png?_a=DATAiZAAZAA0",
-                "PlayStation"
-            ),
-            PlatformItem(
-                R.string.platform_xbox,
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Rt_VfAs451lrAtGQHRC6tcMW5PoPB2h5uA&s",
-                "Xbox"
-            ),
-            PlatformItem(
-                R.string.platform_nintendo,
-                "https://i.pinimg.com/236x/63/69/2d/63692dec066bac00bb10806880533901.jpg",
-                "Nintendo"
-            )
+            PlatformItem(R.string.platform_playstation, URL_PLAYSTATION, PLATFORM_PLAYSTATION),
+            PlatformItem(R.string.platform_xbox, URL_XBOX, PLATFORM_XBOX),
+            PlatformItem(R.string.platform_nintendo, URL_NINTENDO, PLATFORM_NINTENDO)
         )
     }
 
@@ -84,7 +82,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                     text = stringResource(R.string.add_game_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF4A4A58)
+                    color = DarkTitleColor
                 )
             }
         },
@@ -112,7 +110,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF68A641)),
+                    colors = ButtonDefaults.buttonColors(containerColor = SaveButtonColor),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
@@ -150,6 +148,21 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 value = coverUrl,
                 onValueChange = { coverUrl = it }
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            if (coverUrl.isNotBlank()) {
+                Card(
+                    modifier = Modifier.size(120.dp).padding(top = 8.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    AsyncImage(
+                        model = coverUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 

@@ -23,6 +23,18 @@ import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.R
 import com.example.juegosfavoritos_practica5.ui.game.model.PlatformItem
 import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
+import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
+import com.example.juegosfavoritos_practica5.ui.theme.SaveButtonColor
+
+private const val PLATFORM_PLAYSTATION = "PlayStation"
+private const val PLATFORM_XBOX = "Xbox"
+private const val PLATFORM_NINTENDO = "Nintendo"
+
+private const val URL_PLAYSTATION = "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/video-games/playstation-isc3f6x60ta8lfk0hb24t.png/playstation-4ng359rzs0ryrajkol4q5.png?_a=DATAiZAAZAA0"
+private const val URL_XBOX = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Rt_VfAs451lrAtGQHRC6tcMW5PoPB2h5uA&s"
+private const val URL_NINTENDO = "https://i.pinimg.com/236x/63/69/2d/63692dec066bac00bb10806880533901.jpg"
+private const val URL_ALL_PLATFORMS = "https://us.123rf.com/450wm/martialred/martialred1710/martialred171000010/88316249-geometric-shapes-vector-icon-for-education-apps-and-websites.jpg"
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,26 +45,10 @@ fun FilterDialog(
 ) {
     val platforms = remember {
         listOf(
-            PlatformItem(
-                R.string.platform_playstation,
-                "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/video-games/playstation-isc3f6x60ta8lfk0hb24t.png/playstation-4ng359rzs0ryrajkol4q5.png?_a=DATAiZAAZAA0",
-                "PlayStation"
-            ),
-            PlatformItem(
-                R.string.platform_xbox,
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Rt_VfAs451lrAtGQHRC6tcMW5PoPB2h5uA&s",
-                "Xbox"
-            ),
-            PlatformItem(
-                R.string.platform_nintendo,
-                "https://i.pinimg.com/236x/63/69/2d/63692dec066bac00bb10806880533901.jpg",
-                "Nintendo"
-            ),
-            PlatformItem(
-                R.string.platform_all,
-                "https://us.123rf.com/450wm/martialred/martialred1710/martialred171000010/88316249-geometric-shapes-vector-icon-for-education-apps-and-websites.jpg",
-                null
-            )
+            PlatformItem(R.string.platform_playstation, URL_PLAYSTATION, PLATFORM_PLAYSTATION),
+            PlatformItem(R.string.platform_xbox, URL_XBOX, PLATFORM_XBOX),
+            PlatformItem(R.string.platform_nintendo, URL_NINTENDO, PLATFORM_NINTENDO),
+            PlatformItem(R.string.platform_all, URL_ALL_PLATFORMS, null)
         )
     }
 
@@ -102,7 +98,7 @@ fun FilterDialog(
                             .fillMaxWidth()
                             .padding(vertical = 8.dp)
                             .clip(RoundedCornerShape(32.dp))
-                            .background(if (isSelected) Color(0xFFE0E0E0) else Color.Transparent)
+                            .background(if (isSelected) Color.Gray else Color.Transparent)
                             .clickable { tempSelection = platform.key }
                             .padding(horizontal = 24.dp, vertical = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -119,7 +115,7 @@ fun FilterDialog(
                         Text(
                             text = stringResource(platform.nameRes),
                             style = MaterialTheme.typography.titleLarge,
-                            color = Color(0xFF4A4A58),
+                            color = DarkTitleColor,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -144,7 +140,7 @@ fun FilterDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(64.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF68A641)),
+                        colors = ButtonDefaults.buttonColors(containerColor = SaveButtonColor),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
