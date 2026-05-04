@@ -7,5 +7,5 @@ data class GameBo(
     val launchDate: String,
     val cover: String,
     val platforms: List<String>,
-    val pegi: String
+    val pegi: Int
 )

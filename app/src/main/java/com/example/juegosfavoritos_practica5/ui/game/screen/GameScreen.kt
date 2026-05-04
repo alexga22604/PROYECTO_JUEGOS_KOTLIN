@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,12 +31,13 @@ import androidx.compose.ui.unit.dp
 import com.example.juegosfavoritos_practica5.R
 import com.example.juegosfavoritos_practica5.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
+import com.example.juegosfavoritos_practica5.ui.game.component.GameItem
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
 import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen(viewModel: GameViewModel) {
+fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
     val state by viewModel.uiState.collectAsState()
     var showFilterDialog by remember { mutableStateOf(false) }
     var gameToDelete by remember { mutableStateOf<GameBo?>(null) }
@@ -65,23 +65,14 @@ fun GameScreen(viewModel: GameViewModel) {
                                 onLongClick = { gameToDelete = game }
                             )
                     ) {
-                        Text(
-                            text = game.name,
-                            modifier = Modifier.padding(16.dp),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            thickness = 0.5.dp,
-                            color = Color.LightGray
-                        )
+                        GameItem(game = game)
                     }
                 }
             }
         }
 
         FloatingActionButton(
-            onClick = { },
+            onClick = { onNavigateToAddGame() },
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.BottomEnd),
@@ -96,13 +87,10 @@ fun GameScreen(viewModel: GameViewModel) {
     if (showFilterDialog) {
         FilterDialog(
             onDismiss = { showFilterDialog = false },
-            onPlatformSelected = { viewModel.setFilter(it) },
-            platforms = listOf(
-                stringResource(R.string.platform_playstation),
-                stringResource(R.string.platform_xbox),
-                stringResource(R.string.platform_nintendo),
-                stringResource(R.string.platform_pc)
-            )
+            onPlatformSelected = { platformKey ->
+                viewModel.setFilter(platformKey)
+            },
+            currentSelection = state.selectedPlatform
         )
     }
 }

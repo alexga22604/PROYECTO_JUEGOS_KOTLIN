@@ -6,11 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class ScreenNav : NavKey {
     @Serializable
-    object Welcome : ScreenNav()
+    data object Welcome : ScreenNav()
 
     @Serializable
-    object Games : ScreenNav()
+    data object Games : ScreenNav()
 
     @Serializable
-    object Profile : ScreenNav()
+    data object Profile : ScreenNav()
+
+    @Serializable
+    data object AddGame : ScreenNav()
 }

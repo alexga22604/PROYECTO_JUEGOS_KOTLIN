@@ -58,16 +58,15 @@ fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
     ) { innerPadding ->
         AppNavigation(paddingValues = innerPadding, backStack = backStack, viewModel = viewModel)
         if (showFilterDialog) {
-            FilterDialog(
-                onDismiss = { showFilterDialog = false },
-                onPlatformSelected = { viewModel.setFilter(it) },
-                platforms = listOf(
-                    stringResource(R.string.platform_playstation),
-                    stringResource(R.string.platform_xbox),
-                    stringResource(R.string.platform_nintendo),
-                    stringResource(R.string.platform_pc)
+            if (showFilterDialog) {
+                FilterDialog(
+                    onDismiss = { showFilterDialog = false },
+                    onPlatformSelected = { platformKey ->
+                        viewModel.setFilter(platformKey)
+                    },
+                    currentSelection = state.selectedPlatform
                 )
-            )
+            }
+        }
         }
     }
-}
