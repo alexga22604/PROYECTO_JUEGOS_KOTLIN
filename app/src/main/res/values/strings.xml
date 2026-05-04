@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">JuegosFavoritos-practica5</string>
-    <string name="welcome_txt">Bienvenido</string>
+    <string name="welcome_txt">Juegos</string>
     <string name="list_bottombar">List</string>
     <string name="profile_bottombar">Profile</string>
     <string name="games_bottombar">Games</string>
@@ -27,12 +27,23 @@
     <string name="by_id">Por ID</string>
     <string name="alphabetical">Alfabético</string>
     <string name="default_order">Por defecto</string>
-    <string name="filter_dialog_title">Filtrar por plataforma</string>
+    <string name="filter_dialog_title">Filtrar</string>
     <string name="platform_all">Todas</string>
     <string name="filter_dialog_cancel">Cancelar</string>
     <string name="preferences_title">Preferencias</string>
     <string name="preference_filter_platform">Filtro plataforma</string>
     <string name="preference_sort_order">Orden juegos</string>
     <string name="add_floating_btn">Add</string>
+    <string name="filter_dialog_accept">Aceptar</string>
+    <string name="add_game_title">Nuevo Juego</string>
+    <string name="save_button">Guardar</string>
+    <string name="label_name">Nombre</string>
+    <string name="label_studio">Estudio</string>
+    <string name="label_release_date">Lanzamiento</string>
+    <string name="label_cover_url">Portada</string>
+    <string name="label_platform">Plataforma</string>
+    <string name="label_pegi">PEGI</string>
+    <string name="pegui_select">Selecciona Pegui</string>
+
 
 </resources>

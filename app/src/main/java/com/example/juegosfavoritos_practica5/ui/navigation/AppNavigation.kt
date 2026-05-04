@@ -9,6 +9,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.example.juegosfavoritos_practica5.ui.game.screen.AddGameScreen
 import com.example.juegosfavoritos_practica5.ui.game.screen.GameScreen
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
 import com.example.juegosfavoritos_practica5.ui.preference.screen.PreferenceScreen
@@ -37,11 +38,17 @@ fun AppNavigation(
             }
 
             entry<ScreenNav.Games> {
-                GameScreen(viewModel = viewModel)
+                GameScreen(viewModel = viewModel, onNavigateToAddGame = {backStack.add(ScreenNav.AddGame)})
             }
 
             entry<ScreenNav.Profile> {
                 PreferenceScreen(viewModel = viewModel)
+            }
+            entry<ScreenNav.AddGame> {
+                AddGameScreen(
+                    viewModel = viewModel,
+                    onBack = { backStack.removeLastOrNull() }
+                )
             }
         }
     )
