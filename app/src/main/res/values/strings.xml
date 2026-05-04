@@ -4,7 +4,6 @@
     <string name="list_bottombar">List</string>
     <string name="profile_bottombar">Profile</string>
     <string name="games_bottombar">Games</string>
-    <string name="no_favourites_games">No hay juegos favoritos</string>
     <string name="games">Juegos</string>
     <string name="filter">Filtrar</string>
     <string name="add_game">Añadir</string>
@@ -12,8 +11,6 @@
     <string name="content_desc_sort_id">Ordenar ID</string>
     <string name="content_desc_sort_alpha">Ordenar AZ</string>
     <string name="content_desc_filter">Filtrar</string>
-    <string name="snackbar_game_deleted">Juego eliminado</string>
-    <string name="snackbar_undo">Deshacer</string>
     <string name="platform_playstation">PlayStation</string>
     <string name="platform_xbox">Xbox</string>
     <string name="platform_nintendo">Nintendo</string>
@@ -44,6 +41,13 @@
     <string name="label_platform">Plataforma</string>
     <string name="label_pegi">PEGI</string>
     <string name="pegui_select">Selecciona Pegui</string>
+    <string name="delete_dialog_title">¿Borrar juego?</string>
+    <string name="delete_dialog_message">¿Estás seguro de que quieres eliminar \"%1$s\" de tus favoritos?</string>
+    <string name="delete_confirm">Borrar</string>
+    <string name="delete_cancel">Cancelar</string>
+    <string name="snackbar_game_deleted">Juego eliminado</string>
+    <string name="snackbar_undo">Deshacer</string>
+    <string name="no_favourites_games">No hay juegos favoritos</string>
 
 
 </resources>
