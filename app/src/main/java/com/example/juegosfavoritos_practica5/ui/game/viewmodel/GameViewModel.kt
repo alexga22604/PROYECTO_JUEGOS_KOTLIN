@@ -1,32 +1,60 @@
 package com.example.juegosfavoritos_practica5.ui.game.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.juegosfavoritos_practica5.domain.model.GameBo
-import com.example.juegosfavoritos_practica5.domain.model.StudioBo
+import androidx.lifecycle.viewModelScope
+import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
+import com.example.juegosfavoritos_practica5.data.domain.model.StudioBo
+import com.example.juegosfavoritos_practica5.data.local.PreferenceManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-private const val DEFAULT_ID = 0
-private const val DEFAULT_PEGI = 3
+private val DEFAULT_ID = 0
+private val DEFAULT_PEGI = 3
 
-class GameViewModel : ViewModel() {
+class GameViewModel(
+    private val preferenceManager: PreferenceManager
+) : ViewModel() {
+
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
+
+    private var lastDeletedGame: GameBo? = null
+
+    init {
+        viewModelScope.launch {
+            preferenceManager.platformFilter.collect { platform ->
+                _uiState.update { it.copy(selectedPlatform = platform) }
+            }
+        }
+
+        viewModelScope.launch {
+            preferenceManager.sortOrder.collect { sortType ->
+                _uiState.update { it.copy(sortType = sortType) }
+            }
+        }
+    }
+
     fun setSortById() {
-        _uiState.update { it.copy(sortType = SortType.ID) }
+        viewModelScope.launch {
+            preferenceManager.saveSortOrder(SortType.ID)
+        }
     }
 
     fun setSortByName() {
-        _uiState.update { it.copy(sortType = SortType.NAME) }
+        viewModelScope.launch {
+            preferenceManager.saveSortOrder(SortType.NAME)
+        }
     }
 
     fun setFilter(platform: String?) {
-        _uiState.update { it.copy(selectedPlatform = platform) }
+        viewModelScope.launch {
+            preferenceManager.savePlatformFilter(platform)
+        }
     }
 
-    private var lastDeletedGame: GameBo? = null
     fun deleteGame(game: GameBo) {
         lastDeletedGame = game
         _uiState.update { it.copy(games = it.games - game) }

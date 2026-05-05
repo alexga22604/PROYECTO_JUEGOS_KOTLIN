@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.domain.model.GameBo
+import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.ui.game.component.DeleteGameDialog
 import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
 import com.example.juegosfavoritos_practica5.ui.game.component.GameItem
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
+fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit, onNavigateToStudio: (String) -> Unit) {
     val state by viewModel.uiState.collectAsState()
     var gameToDelete by remember { mutableStateOf<GameBo?>(null) }
     var showFilterDialog by remember { mutableStateOf(false) }
@@ -92,7 +92,12 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
                                     onLongClick = { gameToDelete = game }
                                 )
                         ) {
-                            GameItem(game = game)
+                            GameItem(
+                                game = game,
+                                onStudioClick = { studioName ->
+                                    onNavigateToStudio(studioName)
+                                }
+                            )
                         }
                     }
                 }

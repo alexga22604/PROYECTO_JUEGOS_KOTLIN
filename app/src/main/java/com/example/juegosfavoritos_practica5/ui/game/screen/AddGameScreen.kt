@@ -2,35 +2,14 @@ package com.example.juegosfavoritos_practica5.ui.game.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -63,8 +42,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     var selectedPegi by remember { mutableStateOf(DEFAULT_PEGI_AGE) }
     var selectedPegiUrl by remember { mutableStateOf(GameRepository.getPegiIcon(DEFAULT_PEGI_AGE)) }
     var showPegiDialog by remember { mutableStateOf(false) }
-    val platformItems =
-        remember { GameRepository.getPlatformFilterList().filter { it.key != null } }
+    val platformItems = remember { GameRepository.getPlatformFilterList().filter { it.key != null } }
 
     Scaffold(
         topBar = {
@@ -101,14 +79,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 Button(
                     onClick = {
                         if (name.isNotBlank()) {
-                            viewModel.addGame(
-                                name = name,
-                                studioName = studio,
-                                releaseDate = releaseDate,
-                                coverUrl = coverUrl,
-                                platforms = selectedPlatforms,
-                                pegi = selectedPegi
-                            )
+                            viewModel.addGame(name, studio, releaseDate, coverUrl, selectedPlatforms, selectedPegi)
                             onBack()
                         }
                     },
@@ -118,11 +89,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                     colors = ButtonDefaults.buttonColors(containerColor = SaveButtonColor),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.save_button),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text(stringResource(R.string.save_button), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -133,34 +100,16 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 .padding(horizontal = 24.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            CustomInputField(
-                label = stringResource(R.string.label_name),
-                value = name,
-                onValueChange = { name = it }
-            )
-            CustomInputField(
-                label = stringResource(R.string.label_studio),
-                value = studio,
-                onValueChange = { studio = it }
-            )
-            CustomInputField(
-                label = stringResource(R.string.label_release_date),
-                value = releaseDate,
-                onValueChange = { releaseDate = it }
-            )
-            CustomInputField(
-                label = stringResource(R.string.label_cover_url),
-                value = coverUrl,
-                onValueChange = { coverUrl = it }
-            )
+            CustomInputField(stringResource(R.string.label_name), name, { name = it })
+            CustomInputField(stringResource(R.string.label_studio), studio, { studio = it })
+            CustomInputField(stringResource(R.string.label_release_date), releaseDate, { releaseDate = it }, isYearType = true)
+            CustomInputField(stringResource(R.string.label_cover_url), coverUrl, { coverUrl = it })
 
             Spacer(modifier = Modifier.height(16.dp))
 
             if (coverUrl.isNotBlank()) {
                 Card(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .padding(top = 8.dp),
+                    modifier = Modifier.size(120.dp).padding(top = 8.dp),
                     shape = RoundedCornerShape(8.dp),
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
@@ -175,16 +124,9 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.label_platform),
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
+                    Text(stringResource(R.string.label_platform), color = Color.Gray, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         platformItems.forEach { platform ->
@@ -193,11 +135,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                                 url = platform.iconUrl,
                                 isSelected = selectedPlatforms.contains(key),
                                 onClick = {
-                                    selectedPlatforms = if (selectedPlatforms.contains(key)) {
-                                        selectedPlatforms - key
-                                    } else {
-                                        selectedPlatforms + key
-                                    }
+                                    selectedPlatforms = if (selectedPlatforms.contains(key)) selectedPlatforms - key else selectedPlatforms + key
                                 }
                             )
                         }
@@ -205,23 +143,10 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = stringResource(R.string.label_pegi),
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
+                    Text(stringResource(R.string.label_pegi), color = Color.Gray, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clickable { showPegiDialog = true },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        AsyncImage(
-                            model = selectedPegiUrl,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                    Box(modifier = Modifier.size(50.dp).clickable { showPegiDialog = true }, contentAlignment = Alignment.Center) {
+                        AsyncImage(model = selectedPegiUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                     }
                 }
             }
@@ -229,12 +154,9 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     }
 
     if (showPegiDialog) {
-        PegiDialog(
-            onDismiss = { showPegiDialog = false },
-            onPegiSelected = { age, url ->
-                selectedPegi = age
-                selectedPegiUrl = url
-            }
-        )
+        PegiDialog(onDismiss = { showPegiDialog = false }, onPegiSelected = { age, url ->
+            selectedPegi = age
+            selectedPegiUrl = url
+        })
     }
 }
