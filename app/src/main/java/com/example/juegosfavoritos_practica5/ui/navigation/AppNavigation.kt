@@ -38,7 +38,9 @@ fun AppNavigation(
             }
 
             entry<ScreenNav.Games> {
-                GameScreen(viewModel = viewModel, onNavigateToAddGame = {backStack.add(ScreenNav.AddGame)})
+                GameScreen(
+                    viewModel = viewModel,
+                    onNavigateToAddGame = { backStack.add(ScreenNav.AddGame) })
             }
 
             entry<ScreenNav.Profile> {

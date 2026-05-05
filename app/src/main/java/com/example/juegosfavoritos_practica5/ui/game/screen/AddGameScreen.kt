@@ -2,42 +2,55 @@ package com.example.juegosfavoritos_practica5.ui.game.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.R
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
 import com.example.juegosfavoritos_practica5.ui.game.component.CustomInputField
 import com.example.juegosfavoritos_practica5.ui.game.component.PegiDialog
 import com.example.juegosfavoritos_practica5.ui.game.component.PlatformIconItem
-import com.example.juegosfavoritos_practica5.ui.game.model.PlatformItem
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
 import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
 import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
 import com.example.juegosfavoritos_practica5.ui.theme.SaveButtonColor
 
 private const val EMPTY_STRING = ""
-private const val PLATFORM_PLAYSTATION = "PlayStation"
-private const val PLATFORM_XBOX = "Xbox"
-private const val PLATFORM_NINTENDO = "Nintendo"
-
-private const val URL_PLAYSTATION = "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/video-games/playstation-isc3f6x60ta8lfk0hb24t.png/playstation-4ng359rzs0ryrajkol4q5.png?_a=DATAiZAAZAA0"
-private const val URL_XBOX = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Rt_VfAs451lrAtGQHRC6tcMW5PoPB2h5uA&s"
-private const val URL_NINTENDO = "https://i.pinimg.com/236x/63/69/2d/63692dec066bac00bb10806880533901.jpg"
-private const val URL_DEFAULT_PEGI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0VFJ5SrtF_e0oMczXOTo6P7mZx2sT2CC9w&s"
-
 private const val DEFAULT_PEGI_AGE = 3
 
 @Composable
@@ -47,19 +60,11 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     var releaseDate by remember { mutableStateOf(EMPTY_STRING) }
     var coverUrl by remember { mutableStateOf(EMPTY_STRING) }
     var selectedPlatforms by remember { mutableStateOf(setOf<String>()) }
-
     var selectedPegi by remember { mutableStateOf(DEFAULT_PEGI_AGE) }
-    var selectedPegiUrl by remember { mutableStateOf(URL_DEFAULT_PEGI) }
-
+    var selectedPegiUrl by remember { mutableStateOf(GameRepository.getPegiIcon(DEFAULT_PEGI_AGE)) }
     var showPegiDialog by remember { mutableStateOf(false) }
-
-    val platformItems = remember {
-        listOf(
-            PlatformItem(R.string.platform_playstation, URL_PLAYSTATION, PLATFORM_PLAYSTATION),
-            PlatformItem(R.string.platform_xbox, URL_XBOX, PLATFORM_XBOX),
-            PlatformItem(R.string.platform_nintendo, URL_NINTENDO, PLATFORM_NINTENDO)
-        )
-    }
+    val platformItems =
+        remember { GameRepository.getPlatformFilterList().filter { it.key != null } }
 
     Scaffold(
         topBar = {
@@ -148,10 +153,14 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 value = coverUrl,
                 onValueChange = { coverUrl = it }
             )
+
             Spacer(modifier = Modifier.height(16.dp))
+
             if (coverUrl.isNotBlank()) {
                 Card(
-                    modifier = Modifier.size(120.dp).padding(top = 8.dp),
+                    modifier = Modifier
+                        .size(120.dp)
+                        .padding(top = 8.dp),
                     shape = RoundedCornerShape(8.dp),
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
@@ -159,7 +168,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                         model = coverUrl,
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
-                        contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                        contentScale = ContentScale.Crop
                     )
                 }
             }

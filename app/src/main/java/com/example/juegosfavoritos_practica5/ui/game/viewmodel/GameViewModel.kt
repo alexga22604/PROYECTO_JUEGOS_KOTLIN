@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+private const val DEFAULT_ID = 0
+private const val DEFAULT_PEGI = 3
+
 class GameViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
@@ -35,6 +38,7 @@ class GameViewModel : ViewModel() {
             lastDeletedGame = null
         }
     }
+
     fun addGame(
         name: String,
         studioName: String,
@@ -44,13 +48,13 @@ class GameViewModel : ViewModel() {
         pegi: Int?
     ) {
         val newGame = GameBo(
-            id = 0,
+            id = DEFAULT_ID,
             name = name,
-            studio = StudioBo(id = 0, name = studioName),
+            studio = StudioBo(id = DEFAULT_ID, name = studioName),
             launchDate = releaseDate,
             cover = coverUrl,
             platforms = platforms.toList(),
-            pegi = pegi ?: 3
+            pegi = pegi ?: DEFAULT_PEGI
         )
 
         _uiState.update { currentState ->

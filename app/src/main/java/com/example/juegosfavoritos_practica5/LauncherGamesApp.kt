@@ -68,5 +68,5 @@ fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
                 )
             }
         }
-        }
     }
+}
