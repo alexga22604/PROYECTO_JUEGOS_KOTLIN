@@ -1,4 +1,4 @@
-package com.example.juegosfavoritos_practica5.ui.game.viewmodel
+package com.example.juegosfavoritos_practica5.ui.game.state
 
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 
