@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.data.domain.model.StudioBo
 import com.example.juegosfavoritos_practica5.data.local.PreferenceManager
+import com.example.juegosfavoritos_practica5.ui.game.state.GameUiState
+import com.example.juegosfavoritos_practica5.ui.game.state.SortType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
