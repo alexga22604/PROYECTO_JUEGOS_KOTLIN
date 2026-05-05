@@ -16,4 +16,6 @@ sealed class ScreenNav : NavKey {
 
     @Serializable
     data object AddGame : ScreenNav()
+
+    data class Studio(val name: String) : ScreenNav()
 }

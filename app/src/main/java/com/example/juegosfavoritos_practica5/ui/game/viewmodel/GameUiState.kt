@@ -1,6 +1,6 @@
 package com.example.juegosfavoritos_practica5.ui.game.viewmodel
 
-import com.example.juegosfavoritos_practica5.domain.model.GameBo
+import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 
 enum class SortType {
     ID, NAME

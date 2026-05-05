@@ -6,26 +6,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.rememberNavBackStack
+import com.example.juegosfavoritos_practica5.data.local.PreferenceManager
 import com.example.juegosfavoritos_practica5.ui.common.AppScaffold
 import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
 import com.example.juegosfavoritos_practica5.ui.game.component.GameTopBar
 import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModel
+import com.example.juegosfavoritos_practica5.ui.game.viewmodel.GameViewModelFactory
 import com.example.juegosfavoritos_practica5.ui.navigation.AppNavigation
 import com.example.juegosfavoritos_practica5.ui.navigation.ScreenNav
 
 private const val DEFAULT = ""
 
 @Composable
-fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
+fun LauncherGamesApp() {
+    val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    val factory = remember { GameViewModelFactory(preferenceManager) }
+    val viewModel: GameViewModel = viewModel(factory = factory)
+
     val state by viewModel.uiState.collectAsState()
     val backStack = rememberNavBackStack(ScreenNav.Welcome)
     val currentRoute = backStack.lastOrNull()
     var showFilterDialog by remember { mutableStateOf(false) }
     val gamesRoute = stringResource(R.string.games_route)
     val profileRoute = stringResource(R.string.profile_route)
+
     val currentRouteString = when (currentRoute) {
         ScreenNav.Games -> gamesRoute
         ScreenNav.Profile -> profileRoute
@@ -37,11 +46,12 @@ fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
         onNavigate = { route ->
             when (route) {
                 gamesRoute -> {
-                    backStack.clear(); backStack.add(ScreenNav.Games)
+                    backStack.clear()
+                    backStack.add(ScreenNav.Games)
                 }
-
                 profileRoute -> {
-                    backStack.clear(); backStack.add(ScreenNav.Profile)
+                    backStack.clear()
+                    backStack.add(ScreenNav.Profile)
                 }
             }
         },
@@ -57,16 +67,16 @@ fun LauncherGamesApp(viewModel: GameViewModel = viewModel()) {
         }
     ) { innerPadding ->
         AppNavigation(paddingValues = innerPadding, backStack = backStack, viewModel = viewModel)
+
         if (showFilterDialog) {
-            if (showFilterDialog) {
-                FilterDialog(
-                    onDismiss = { showFilterDialog = false },
-                    onPlatformSelected = { platformKey ->
-                        viewModel.setFilter(platformKey)
-                    },
-                    currentSelection = state.selectedPlatform
-                )
-            }
+            FilterDialog(
+                onDismiss = { showFilterDialog = false },
+                onPlatformSelected = { platformKey ->
+                    viewModel.setFilter(platformKey)
+                    showFilterDialog = false
+                },
+                currentSelection = state.selectedPlatform
+            )
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.juegosfavoritos_practica5.domain.model
+package com.example.juegosfavoritos_practica5.data.domain.model
 
 data class GameBo(
     val id: Int,
