@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "games")
 data class GameDbo(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String ,
+    val name: String,
     val studio: String,
     val launchDate: String,
     val cover: String,

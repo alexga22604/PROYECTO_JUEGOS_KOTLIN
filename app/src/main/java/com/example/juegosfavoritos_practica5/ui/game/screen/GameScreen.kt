@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +21,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.juegosfavoritos_practica5.R
 import com.example.juegosfavoritos_practica5.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.ui.game.component.DeleteGameDialog
@@ -51,10 +47,8 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
     val state by viewModel.uiState.collectAsState()
     var gameToDelete by remember { mutableStateOf<GameBo?>(null) }
     var showFilterDialog by remember { mutableStateOf(false) }
-
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
     val snackbarMessage = stringResource(R.string.snackbar_game_deleted)
     val snackbarAction = stringResource(R.string.snackbar_undo)
 
@@ -67,7 +61,10 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
                 contentColor = Color.White,
                 shape = CircleShape
             ) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_floating_btn))
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_floating_btn)
+                )
             }
         }
     ) { padding ->
@@ -87,7 +84,7 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(state.filteredAndSortedGames) { game ->
-                        Column(
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .combinedClickable(
@@ -108,8 +105,7 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
             gameName = game.name,
             onDismiss = { gameToDelete = null },
             onConfirm = {
-                val currentGame = game
-                viewModel.deleteGame(currentGame)
+                viewModel.deleteGame(game)
                 gameToDelete = null
 
                 scope.launch {
@@ -119,14 +115,7 @@ fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit) {
                         duration = SnackbarDuration.Short
                     )
                     if (result == SnackbarResult.ActionPerformed) {
-                        viewModel.addGame(
-                            name = currentGame.name,
-                            studioName = "",
-                            releaseDate = currentGame.launchDate,
-                            coverUrl = currentGame.cover,
-                            platforms = currentGame.platforms.toSet(),
-                            pegi = 3
-                        )
+                        viewModel.undoDelete()
                     }
                 }
             }
