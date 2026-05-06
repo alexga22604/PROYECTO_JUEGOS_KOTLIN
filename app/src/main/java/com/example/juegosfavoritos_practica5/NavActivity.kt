@@ -12,6 +12,7 @@ class NavActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JuegosFavoritospractica5Theme {
+                LauncherGamesApp()
             }
         }
     }
