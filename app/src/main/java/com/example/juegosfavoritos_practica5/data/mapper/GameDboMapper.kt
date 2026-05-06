@@ -1,8 +1,8 @@
 package com.example.juegosfavoritos_practica5.data.mapper
 
-import com.example.juegosfavoritos_practica5.data.entity.GameDbo
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.data.domain.model.StudioBo
+import com.example.juegosfavoritos_practica5.data.entity.GameDbo
 
 fun GameDbo.toBo(studioBo: StudioBo) = GameBo(
     id = id,

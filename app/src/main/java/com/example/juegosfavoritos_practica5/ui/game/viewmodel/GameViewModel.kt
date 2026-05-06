@@ -17,10 +17,8 @@ private val DEFAULT_PEGI = 3
 class GameViewModel(
     private val preferenceManager: PreferenceManager
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
-
     private var lastDeletedGame: GameBo? = null
 
     init {

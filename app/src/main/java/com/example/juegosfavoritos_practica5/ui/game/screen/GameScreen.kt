@@ -43,7 +43,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen(viewModel: GameViewModel, onNavigateToAddGame: () -> Unit, onNavigateToStudio: (String) -> Unit) {
+fun GameScreen(
+    viewModel: GameViewModel,
+    onNavigateToAddGame: () -> Unit,
+    onNavigateToStudio: (String) -> Unit
+) {
     val state by viewModel.uiState.collectAsState()
     var gameToDelete by remember { mutableStateOf<GameBo?>(null) }
     var showFilterDialog by remember { mutableStateOf(false) }

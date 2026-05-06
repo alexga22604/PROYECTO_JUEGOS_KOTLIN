@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -29,13 +28,11 @@ fun AppNavigation(
     val gamesRoute = stringResource(R.string.games_route)
     val profileRoute = stringResource(R.string.profile_route)
     val currentKey = backStack.lastOrNull()
-
     val currentRouteStr = when (currentKey) {
         is ScreenNav.Games, is ScreenNav.Studio -> gamesRoute
         is ScreenNav.Profile -> profileRoute
         else -> null
     }
-
     val displayModifier = if (currentKey is ScreenNav.Studio) {
         Modifier
     } else {

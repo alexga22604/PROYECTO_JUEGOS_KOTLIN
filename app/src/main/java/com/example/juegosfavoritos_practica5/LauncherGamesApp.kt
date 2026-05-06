@@ -27,14 +27,12 @@ fun LauncherGamesApp() {
     val preferenceManager = remember { PreferenceManager(context) }
     val factory = remember { GameViewModelFactory(preferenceManager) }
     val viewModel: GameViewModel = viewModel(factory = factory)
-
     val state by viewModel.uiState.collectAsState()
     val backStack = rememberNavBackStack(ScreenNav.Welcome)
     val currentRoute = backStack.lastOrNull()
     var showFilterDialog by remember { mutableStateOf(false) }
     val gamesRoute = stringResource(R.string.games_route)
     val profileRoute = stringResource(R.string.profile_route)
-
     val currentRouteString = when (currentRoute) {
         ScreenNav.Games -> gamesRoute
         ScreenNav.Profile -> profileRoute
@@ -49,6 +47,7 @@ fun LauncherGamesApp() {
                     backStack.clear()
                     backStack.add(ScreenNav.Games)
                 }
+
                 profileRoute -> {
                     backStack.clear()
                     backStack.add(ScreenNav.Profile)

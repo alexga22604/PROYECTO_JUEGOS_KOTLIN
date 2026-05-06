@@ -24,8 +24,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
 import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
 import com.example.juegosfavoritos_practica5.ui.theme.GameItemBackground
 
