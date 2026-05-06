@@ -95,7 +95,7 @@ fun SelectableIconButton(
             modifier = Modifier
                 .size(40.dp)
                 .background(
-                    color = if (isSelected) Color(0xFFBDBDBD) else Color.Transparent,
+                    color = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent,
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
