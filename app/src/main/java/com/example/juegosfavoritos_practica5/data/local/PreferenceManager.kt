@@ -1,6 +1,5 @@
 package com.example.juegosfavoritos_practica5.data.local
 
-
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -12,14 +11,11 @@ import kotlinx.coroutines.flow.map
 private val Context.dataStore by preferencesDataStore(name = "user_preferences")
 
 class PreferenceManager(private val context: Context) {
-
     private val PLATFORM_FILTER_KEY = stringPreferencesKey("platform_filter")
     private val SORT_ORDER_KEY = stringPreferencesKey("sort_order")
-
     val platformFilter: Flow<String?> = context.dataStore.data.map { prefs ->
         prefs[PLATFORM_FILTER_KEY]
     }
-
     val sortOrder: Flow<SortType> = context.dataStore.data.map { prefs ->
         val sortName = prefs[SORT_ORDER_KEY] ?: SortType.NAME.name
         SortType.valueOf(sortName)
