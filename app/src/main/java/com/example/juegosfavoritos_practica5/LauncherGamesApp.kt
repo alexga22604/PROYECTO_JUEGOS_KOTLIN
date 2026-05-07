@@ -10,6 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.rememberNavBackStack
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
+import com.example.juegosfavoritos_practica5.data.local.GameDatabase
 import com.example.juegosfavoritos_practica5.data.local.PreferenceManager
 import com.example.juegosfavoritos_practica5.ui.common.AppScaffold
 import com.example.juegosfavoritos_practica5.ui.game.component.FilterDialog
@@ -24,8 +26,10 @@ private const val DEFAULT = ""
 @Composable
 fun LauncherGamesApp() {
     val context = LocalContext.current
+    val database = remember { GameDatabase.getDatabase(context) }
+    val repository = remember { GameRepository(database.gameDao()) }
     val preferenceManager = remember { PreferenceManager(context) }
-    val factory = remember { GameViewModelFactory(preferenceManager) }
+    val factory = remember { GameViewModelFactory(preferenceManager, repository) }
     val viewModel: GameViewModel = viewModel(factory = factory)
     val state by viewModel.uiState.collectAsState()
     val backStack = rememberNavBackStack(ScreenNav.Welcome)

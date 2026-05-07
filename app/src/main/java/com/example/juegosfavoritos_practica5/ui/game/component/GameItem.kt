@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
-import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameConstants
 import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
 import com.example.juegosfavoritos_practica5.ui.theme.GameItemBackground
 
@@ -86,7 +86,7 @@ fun GameItem(game: GameBo, onStudioClick: (String) -> Unit) {
                 ) {
                     game.platforms.forEach { platformName ->
                         AsyncImage(
-                            model = GameRepository.getPlatformIcon(platformName),
+                            model = GameConstants.getPlatformIcon(platformName),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(24.dp)
@@ -97,7 +97,7 @@ fun GameItem(game: GameBo, onStudioClick: (String) -> Unit) {
                     Spacer(modifier = Modifier.width(8.dp))
 
                     AsyncImage(
-                        model = GameRepository.getPegiIcon(game.pegi),
+                        model = GameConstants.getPegiIcon(game.pegi),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
                     )

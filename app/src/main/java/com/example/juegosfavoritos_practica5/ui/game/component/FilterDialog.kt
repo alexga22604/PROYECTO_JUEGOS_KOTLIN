@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameConstants
 import com.example.juegosfavoritos_practica5.ui.theme.BottomBarBackground
 import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
 import com.example.juegosfavoritos_practica5.ui.theme.SaveButtonColor
@@ -56,7 +56,7 @@ fun FilterDialog(
     onPlatformSelected: (String?) -> Unit,
     currentSelection: String?
 ) {
-    val platforms = remember { GameRepository.getPlatformFilterList() }
+    val platforms = remember { GameConstants.getPlatformFilterList() }
     var tempSelection by remember { mutableStateOf(currentSelection) }
 
     BasicAlertDialog(

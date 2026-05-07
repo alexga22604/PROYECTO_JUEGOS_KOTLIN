@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameConstants
 
 private const val EMPTY_STRING = ""
 
@@ -39,7 +39,7 @@ fun PegiDialog(
     onDismiss: () -> Unit,
     onPegiSelected: (Int, String) -> Unit
 ) {
-    val pegis = remember { GameRepository.getPegiOptions() }
+    val pegis = remember { GameConstants.getPegiOptions() }
 
     BasicAlertDialog(
         onDismissRequest = onDismiss,
