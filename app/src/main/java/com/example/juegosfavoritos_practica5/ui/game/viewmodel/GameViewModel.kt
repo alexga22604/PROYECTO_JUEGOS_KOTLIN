@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.data.domain.model.StudioBo
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
 import com.example.juegosfavoritos_practica5.data.local.PreferenceManager
 import com.example.juegosfavoritos_practica5.ui.game.state.GameUiState
 import com.example.juegosfavoritos_practica5.ui.game.state.SortType
@@ -17,13 +18,20 @@ private val DEFAULT_ID = 0
 private val DEFAULT_PEGI = 3
 
 class GameViewModel(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val gameRepository: GameRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
     private var lastDeletedGame: GameBo? = null
 
     init {
+        viewModelScope.launch {
+            gameRepository.getAllGames().collect { gamesList ->
+                _uiState.update { it.copy(games = gamesList) }
+            }
+        }
+
         viewModelScope.launch {
             preferenceManager.platformFilter.collect { platform ->
                 _uiState.update { it.copy(selectedPlatform = platform) }
@@ -57,13 +65,17 @@ class GameViewModel(
 
     fun deleteGame(game: GameBo) {
         lastDeletedGame = game
-        _uiState.update { it.copy(games = it.games - game) }
+        viewModelScope.launch {
+            gameRepository.deleteGame(game)
+        }
     }
 
     fun undoDelete() {
         lastDeletedGame?.let { game ->
-            _uiState.update { it.copy(games = it.games + game) }
-            lastDeletedGame = null
+            viewModelScope.launch {
+                gameRepository.insertGame(game)
+                lastDeletedGame = null
+            }
         }
     }
 
@@ -85,8 +97,8 @@ class GameViewModel(
             pegi = pegi ?: DEFAULT_PEGI
         )
 
-        _uiState.update { currentState ->
-            currentState.copy(games = currentState.games + newGame)
+        viewModelScope.launch {
+            gameRepository.insertGame(newGame)
         }
     }
 }

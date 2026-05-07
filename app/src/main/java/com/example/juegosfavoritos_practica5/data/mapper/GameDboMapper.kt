@@ -4,10 +4,10 @@ import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.data.domain.model.StudioBo
 import com.example.juegosfavoritos_practica5.data.entity.GameDbo
 
-fun GameDbo.toBo(studioBo: StudioBo) = GameBo(
+fun GameDbo.toBo() = GameBo(
     id = id,
     name = name,
-    studio = studioBo,
+    studio = StudioBo(id = 0, name = studio),
     launchDate = launchDate,
     cover = cover,
     platforms = platforms.split(",").filter { it.isNotBlank() },

@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
+import com.example.juegosfavoritos_practica5.data.domain.repository.GameConstants
 import com.example.juegosfavoritos_practica5.ui.game.component.CustomInputField
 import com.example.juegosfavoritos_practica5.ui.game.component.PegiDialog
 import com.example.juegosfavoritos_practica5.ui.game.component.PlatformIconItem
@@ -61,10 +61,10 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     var coverUrl by remember { mutableStateOf(EMPTY_STRING) }
     var selectedPlatforms by remember { mutableStateOf(setOf<String>()) }
     var selectedPegi by remember { mutableStateOf(DEFAULT_PEGI_AGE) }
-    var selectedPegiUrl by remember { mutableStateOf(GameRepository.getPegiIcon(DEFAULT_PEGI_AGE)) }
+    var selectedPegiUrl by remember { mutableStateOf(GameConstants.getPegiIcon(DEFAULT_PEGI_AGE)) }
     var showPegiDialog by remember { mutableStateOf(false) }
     val platformItems =
-        remember { GameRepository.getPlatformFilterList().filter { it.key != null } }
+        remember { GameConstants.getPlatformFilterList().filter { it.key != null } }
 
     Scaffold(
         topBar = {
