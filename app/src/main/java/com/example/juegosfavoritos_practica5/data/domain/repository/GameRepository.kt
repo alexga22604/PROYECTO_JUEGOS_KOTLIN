@@ -8,21 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GameRepository(private val gameDao: GameDao) {
-
     fun getAllGames(): Flow<List<GameBo>> {
         return gameDao.getAllGames().map { dtoList ->
-            dtoList.map { it.toBo() }
-        }
-    }
-
-    fun getGamesByPlatform(platform: String): Flow<List<GameBo>> {
-        return gameDao.getGamesByPlatform(platform).map { dtoList ->
-            dtoList.map { it.toBo() }
-        }
-    }
-
-    fun getGamesByStudio(studioName: String): Flow<List<GameBo>> {
-        return gameDao.getGamesByStudio(studioName).map { dtoList ->
             dtoList.map { it.toBo() }
         }
     }
