@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">JuegosFavoritos-practica5</string>
-    <string name="welcome_txt">Bienvenido</string>
+    <string name="welcome_txt">Juegos</string>
     <string name="list_bottombar">List</string>
     <string name="profile_bottombar">Profile</string>
     <string name="games_bottombar">Games</string>
-    <string name="no_favourites_games">No hay juegos favoritos</string>
     <string name="games">Juegos</string>
     <string name="filter">Filtrar</string>
     <string name="add_game">Añadir</string>
@@ -12,8 +11,6 @@
     <string name="content_desc_sort_id">Ordenar ID</string>
     <string name="content_desc_sort_alpha">Ordenar AZ</string>
     <string name="content_desc_filter">Filtrar</string>
-    <string name="snackbar_game_deleted">Juego eliminado</string>
-    <string name="snackbar_undo">Deshacer</string>
     <string name="platform_playstation">PlayStation</string>
     <string name="platform_xbox">Xbox</string>
     <string name="platform_nintendo">Nintendo</string>
@@ -27,12 +24,30 @@
     <string name="by_id">Por ID</string>
     <string name="alphabetical">Alfabético</string>
     <string name="default_order">Por defecto</string>
-    <string name="filter_dialog_title">Filtrar por plataforma</string>
+    <string name="filter_dialog_title">Filtrar</string>
     <string name="platform_all">Todas</string>
     <string name="filter_dialog_cancel">Cancelar</string>
     <string name="preferences_title">Preferencias</string>
     <string name="preference_filter_platform">Filtro plataforma</string>
     <string name="preference_sort_order">Orden juegos</string>
     <string name="add_floating_btn">Add</string>
+    <string name="filter_dialog_accept">Aceptar</string>
+    <string name="add_game_title">Nuevo Juego</string>
+    <string name="save_button">Guardar</string>
+    <string name="label_name">Nombre</string>
+    <string name="label_studio">Estudio</string>
+    <string name="label_release_date">Lanzamiento</string>
+    <string name="label_cover_url">Portada</string>
+    <string name="label_platform">Plataforma</string>
+    <string name="label_pegi">PEGI</string>
+    <string name="pegui_select">Selecciona Pegui</string>
+    <string name="delete_dialog_title">¿Borrar juego?</string>
+    <string name="delete_dialog_message">¿Estás seguro de que quieres eliminar \"%1$s\" de tus favoritos?</string>
+    <string name="delete_confirm">Borrar</string>
+    <string name="delete_cancel">Cancelar</string>
+    <string name="snackbar_game_deleted">Juego eliminado</string>
+    <string name="snackbar_undo">Deshacer</string>
+    <string name="no_favourites_games">No hay juegos favoritos</string>
+
 
 </resources>
