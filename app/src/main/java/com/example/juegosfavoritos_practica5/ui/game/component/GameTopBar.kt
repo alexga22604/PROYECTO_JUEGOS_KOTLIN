@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.ui.game.viewmodel.SortType
+import com.example.juegosfavoritos_practica5.ui.game.screen.state.SortType
 
 @Composable
 fun GameTopBar(

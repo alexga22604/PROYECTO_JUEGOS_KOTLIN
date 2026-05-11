@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "games")
 data class GameDbo(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val studioId: Int,
+    val studio: String,
     val launchDate: String,
     val cover: String,
     val platforms: String,
-    val pegi: String
+    val pegi: Int
 )
