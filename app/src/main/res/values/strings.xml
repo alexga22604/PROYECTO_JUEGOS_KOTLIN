@@ -48,6 +48,7 @@
     <string name="snackbar_game_deleted">Juego eliminado</string>
     <string name="snackbar_undo">Deshacer</string>
     <string name="no_favourites_games">No hay juegos favoritos</string>
+    <string name="no_games_studio">No hay juegos para este estudio</string>
 
 
 </resources>

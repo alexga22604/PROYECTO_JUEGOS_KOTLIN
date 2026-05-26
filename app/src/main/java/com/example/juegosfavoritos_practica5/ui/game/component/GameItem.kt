@@ -1,5 +1,6 @@
 package com.example.juegosfavoritos_practica5.ui.game.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,13 +24,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.juegosfavoritos_practica5.data.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.data.domain.repository.GameRepository
-import com.example.juegosfavoritos_practica5.domain.model.GameBo
 import com.example.juegosfavoritos_practica5.ui.theme.DarkTitleColor
 import com.example.juegosfavoritos_practica5.ui.theme.GameItemBackground
 
 @Composable
-fun GameItem(game: GameBo) {
+fun GameItem(game: GameBo, onStudioClick: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,7 +67,8 @@ fun GameItem(game: GameBo) {
                 Text(
                     text = game.studio.name,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.clickable { onStudioClick(game.studio.name) }
                 )
                 Text(
                     text = game.launchDate,
