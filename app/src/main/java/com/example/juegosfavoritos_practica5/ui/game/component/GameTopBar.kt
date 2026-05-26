@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.juegosfavoritos_practica5.R
-import com.example.juegosfavoritos_practica5.ui.game.screen.state.SortType
+import com.example.juegosfavoritos_practica5.ui.game.state.SortType
 
 @Composable
 fun GameTopBar(
@@ -95,7 +95,7 @@ fun SelectableIconButton(
             modifier = Modifier
                 .size(40.dp)
                 .background(
-                    color = if (isSelected) Color(0xFFBDBDBD) else Color.Transparent,
+                    color = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent,
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center

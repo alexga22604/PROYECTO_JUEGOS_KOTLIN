@@ -102,12 +102,12 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                     onClick = {
                         if (name.isNotBlank()) {
                             viewModel.addGame(
-                                name = name,
-                                studioName = studio,
-                                releaseDate = releaseDate,
-                                coverUrl = coverUrl,
-                                platforms = selectedPlatforms,
-                                pegi = selectedPegi
+                                name,
+                                studio,
+                                releaseDate,
+                                coverUrl,
+                                selectedPlatforms,
+                                selectedPegi
                             )
                             onBack()
                         }
@@ -119,7 +119,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.save_button),
+                        stringResource(R.string.save_button),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -133,26 +133,15 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 .padding(horizontal = 24.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            CustomInputField(stringResource(R.string.label_name), name, { name = it })
+            CustomInputField(stringResource(R.string.label_studio), studio, { studio = it })
             CustomInputField(
-                label = stringResource(R.string.label_name),
-                value = name,
-                onValueChange = { name = it }
+                stringResource(R.string.label_release_date),
+                releaseDate,
+                { releaseDate = it },
+                isYearType = true
             )
-            CustomInputField(
-                label = stringResource(R.string.label_studio),
-                value = studio,
-                onValueChange = { studio = it }
-            )
-            CustomInputField(
-                label = stringResource(R.string.label_release_date),
-                value = releaseDate,
-                onValueChange = { releaseDate = it }
-            )
-            CustomInputField(
-                label = stringResource(R.string.label_cover_url),
-                value = coverUrl,
-                onValueChange = { coverUrl = it }
-            )
+            CustomInputField(stringResource(R.string.label_cover_url), coverUrl, { coverUrl = it })
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -181,7 +170,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = stringResource(R.string.label_platform),
+                        stringResource(R.string.label_platform),
                         color = Color.Gray,
                         fontSize = 14.sp
                     )
@@ -193,11 +182,8 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                                 url = platform.iconUrl,
                                 isSelected = selectedPlatforms.contains(key),
                                 onClick = {
-                                    selectedPlatforms = if (selectedPlatforms.contains(key)) {
-                                        selectedPlatforms - key
-                                    } else {
-                                        selectedPlatforms + key
-                                    }
+                                    selectedPlatforms =
+                                        if (selectedPlatforms.contains(key)) selectedPlatforms - key else selectedPlatforms + key
                                 }
                             )
                         }
@@ -205,11 +191,7 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = stringResource(R.string.label_pegi),
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
+                    Text(stringResource(R.string.label_pegi), color = Color.Gray, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
                     Box(
                         modifier = Modifier
@@ -229,12 +211,9 @@ fun AddGameScreen(viewModel: GameViewModel, onBack: () -> Unit) {
     }
 
     if (showPegiDialog) {
-        PegiDialog(
-            onDismiss = { showPegiDialog = false },
-            onPegiSelected = { age, url ->
-                selectedPegi = age
-                selectedPegiUrl = url
-            }
-        )
+        PegiDialog(onDismiss = { showPegiDialog = false }, onPegiSelected = { age, url ->
+            selectedPegi = age
+            selectedPegiUrl = url
+        })
     }
 }
